@@ -1,0 +1,113 @@
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../static/invoice.css">
+  </head>
+  <body>
+    <div>
+      <div>
+        <h1 class="bank-page-title" style="color: rgb(68, 125, 189); font-size: 30px;">Create Invoice</h1>
+        <form class="bank-invoice-form" role="form" novalidate method="post" >
+          {% csrf_token %}
+          <div class="form-group">
+            <label>Customer Name</label>
+            <input type="text" class="form-control" name="customer_name" required>  
+          </div>
+          <div class="form-group">
+            <label>Customer Phone</label>
+            <input type="number" class="form-control" name="customer_phone" required>
+          </div>
+          <div class="form-group">
+            <label>Customer Email</label>
+            <input type="email" class="form-control" name="customer_email" required>
+          </div>
+          <table class="bank-invoice-table table table-bordered table-hover">
+            <tr>
+              <th>Item Name</th>
+              <th>Price</th>
+              <th>Quantity</th>
+            </tr>
+            <!-- The input fields get added to each of the following div when user clicks add item button -->
+            <td id="input-container-name"></td>
+            <td id="input-container-price"></td>
+            <td id="input-container-qnty"></td>            
+          </table>
+          <button class="btn btn-default" onclick="addInputField()">Add Item</button>
+          <button type="submit" class="btn btn-default" onclick="addCookies()">Save Invoice</button>
+        </form>
+      </div>
+      
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script>
+      var n=0;
+      //Creating empty arrays of all items, prices and quantities:
+      var items = []
+      var prices = []
+      var quantities = []
+      function addInputField() {
+        n=n+1;
+        //adding input fields to a div created in html for each of item_name, price and quantity
+        var input_item_name = document.createElement("input");
+        var input_quantity = document.createElement("input");
+        var input_price = document.createElement("input");
+        input_item_name.type = "text";
+        input_item_name.placeholder = "Item Name" + " " + n.toString();
+        input_item_name.name = "item_name";
+        input_item_name.id = "item_name" + n.toString();
+        input_item_name.className = "form-control";
+        input_item_name.required = true;
+        input_quantity.type = "number";
+        input_quantity.placeholder = "Quantity" + " " + n.toString();
+        input_quantity.name = "quantity";
+        input_quantity.id = "quantity" + n.toString();
+        input_quantity.className = "form-control";
+        input_quantity.required = true;
+        input_price.type = "number";
+        input_price.placeholder = "Price" + " " + n.toString();
+        input_price.name = "price";
+        input_price.id = "price" + n.toString();
+        input_price.className = "form-control";
+        input_price.required = true;
+        var container1 = document.getElementById("input-container-name");
+        var container2 = document.getElementById("input-container-price");
+        var container3 = document.getElementById("input-container-qnty");
+        container1.appendChild(input_item_name);
+        container2.appendChild(input_price);
+        container3.appendChild(input_quantity);
+        event.preventDefault();
+  
+        //adding each item, price and quantity to the arrays created at the top
+        $(document).ready(function() {
+              $('#item_name'+ n.toString()).on('input', function() { 
+                var item_name = $(this).val();
+                items[n-1]=item_name
+              });
+              $('#price'+ n.toString()).on('input', function() { 
+                var price = $(this).val();
+                prices[n-1]=price
+              });
+              $('#quantity'+ n.toString()).on('input', function() { 
+                var quantity = $(this).val();
+                quantities[n-1]=quantity 
+              });
+            });
+      }
+  
+      //adding all arrays and no. of elements of each array(n) to a cookie
+      function addCookies() {
+          document.cookie="data="+JSON.stringify([n,items,quantities,prices]);
+      }
+  
+    </script>
+  </body>
+</html>

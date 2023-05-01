@@ -1,0 +1,46 @@
+@import "compass/css3";
+body {
+  background-image: url('../static/images.jpeg');
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-size: cover;
+}
+.bank-header {
+background: #333;
+padding: 10px;
+margin-bottom: 20px;
+}
+.bank-page-title {
+font-size: 24px;
+line-height: 24px;
+font-weight: 700;
+margin-bottom: 10px;
+}
+.bank-invoice-form {
+max-width: 960px;
+padding: 0 10px;
+}
+.bank-invoice-table {
+background: #eee;
+}
+.bank-all-invoices {
+max-width: 960px;
+padding: 0 10px;
+}
+.bank-all-invoices .bank-all-invoices-list > li {
+display: table;
+width: 100%;
+margin-bottom: 20px;
+background: #ddd;
+padding: 10px;
+}
+.bank-all-invoices .bank-all-invoices-list > li:nth-child(even) {
+background: #eee;
+}
+.bank-all-invoices .bank-all-invoices-list > li > * {
+display: table-cell;
+vertical-align: top;
+}
+.bank-all-invoices .bank-all-invoices-list > li > *.bank-all-invoices-meta {
+text-align: right;
+}
